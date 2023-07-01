@@ -3,8 +3,10 @@ Written by Arta on 28/06/2023
 MIT
 */
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
 
-#include "graphics.h"
+// #include "graphics.h"
 
 #ifndef PPM_LIB
 #include "ppm.h"
@@ -13,12 +15,15 @@ MIT
 int main(void)
 {
     PPM_File dest;
-    int PPM = ParsePPM("test.ppm", &dest);
-    if (PPM)
+    int PPM = ParsePPM("a.ppm", &dest);
+    if (PPM) {
         puts("Bad PPM");
+        return -1;
+    }
     printf("%d\n", dest.height);
-    uint8_t *content = (uint8_t *)dest.content;
-    printf("%d", content[0]);
+    if (dest.content != NULL) {
+        for (int i = 0; i < dest.height * dest.width; i++)
+            printf("%d\n", dest.content[i]);
+    }
     free(dest.content);
-    return 0;
 }

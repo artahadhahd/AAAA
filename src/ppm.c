@@ -4,7 +4,7 @@
 
 #include "ppm.h"
 
-static void PPM_P1(uint32_t width, uint32_t height, FILE *file, PPM_File *p)
+void PPM_P1(uint32_t width, uint32_t height, FILE *file, PPM_File *p)
 {
     size_t resolution = width * height;
     uint8_t *content = NULL;
@@ -42,14 +42,14 @@ int ParsePPM(char *filename, PPM_File *dest)
     file = fopen(filename, "rb");
     if (file == NULL) {
         fprintf(stderr, "Couldn't open file %s\n", filename);
-        return PPM_IO_ERROR;
+        return PpmIoError;
     }
     
-    char header[2];
+    char header[3];
     uint32_t width, height;
     if (fscanf(file, "%2s %d %d", header, &width, &height) != 3) {
         fprintf(stderr, "Bad PPM header for %s\n", filename);
-        return PPM_BAD_HEADER;
+        return PpmBadHeader;
     }
 
     if (!strcmp(header, "P1")) {
@@ -61,11 +61,11 @@ int ParsePPM(char *filename, PPM_File *dest)
     else if (!strcmp(header, "P6"))
         dest->header = P6;
     else
-        return PPM_UNRECOGNIZED;
+        return PpmUnrecognized;
 
     dest->width = width;
     dest->height = height;
     if (fclose(file))
-        return PPM_IO_ERROR;
+        return PpmIoError;
     return 0;
 }
