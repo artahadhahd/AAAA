@@ -1,15 +1,16 @@
 #pragma once
 
+#ifndef PPM_LIB
+#define PPM_LIB
 #ifndef _GCC_WRAP_STDINT_H
 #include <stdint.h>
 #endif
 
-#ifndef PPM_LIB
-#define PPM_LIB
-#define PPM_UNRECOGNIZED    2
-#define PPM_BAD_HEADER      3
-#define PPM_IO_ERROR        3006 // same as EIO
-#endif
+enum PpmParseException {
+    PpmUnrecognized = 2,
+    PpmBadHeader = 3,
+    PpmIoError = 3006, // same as EIO in errno.h
+};
 
 enum PPM_Header {
     P1,
@@ -20,7 +21,7 @@ enum PPM_Header {
 typedef struct PPM_File {
     enum PPM_Header header;
     uint16_t width, height;
-    void *content;
+    uint8_t *content;
 } PPM_File;
 
 /// @param filename: the name of the file
@@ -28,3 +29,4 @@ typedef struct PPM_File {
 /// @return 0 on success, error code on failure.
 /// @author artahadhahd
 int ParsePPM(char *filename, PPM_File *dest);
+#endif /* End PPM_LIB */
