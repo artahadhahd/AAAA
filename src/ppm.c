@@ -1,10 +1,17 @@
+/*
+    Initial commit by Arta on 28/06/2023
+    GitHub: artahadhahd
+    Website: artahadhahd.github.io
+    MIT License
+*/
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
 #include "ppm.h"
 
-void PPM_P1(uint32_t width, uint32_t height, FILE *file, PPM_File *p)
+static void _ppmP1(uint32_t width, uint32_t height, FILE *file, PPM_File *p)
 {
     size_t resolution = width * height;
     uint8_t *content = NULL;
@@ -54,7 +61,7 @@ int ParsePPM(char *filename, PPM_File *dest)
 
     if (!strcmp(header, "P1")) {
         dest->header = P1;
-        PPM_P1(width, height, file, dest);
+        _ppmP1(width, height, file, dest);
     }
     else if (!strcmp(header, "P3"))
         dest->header = P3;
