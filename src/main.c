@@ -15,11 +15,8 @@
 #include "ppm.h"
 #endif
 
-#ifdef PLATFORM_WINDOWS
-int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
-#else
+
 int main(void)
-#endif
 {
     PPM_File dest;
     int PPM = ParsePPM("a.ppm", &dest);
